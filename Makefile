@@ -1,4 +1,5 @@
+# os : linux
+PROJECT_DIR := $(shell pwd)
+
 buf.gen:
-	docker run --volume "$(pwd):/workspace" --workdir /workspace bufbuild/buf generate
-echo:
-	echo $(PWD)
+	docker run --rm --volume "$(PROJECT_DIR):/workspace" --workdir /workspace bufbuild/buf generate
