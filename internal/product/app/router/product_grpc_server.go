@@ -1,9 +1,13 @@
 package router
 
 import (
+	"context"
+	"log/slog"
+
 	"github.com/google/wire"
 	"github.com/namdam97/go-coffee/internal/product/usecases/products"
 	"github.com/namdam97/go-coffee/proto/gen"
+	"github.com/pkg/errors"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -30,4 +34,52 @@ func NewProductGRPCServer(
 	reflection.Register(grpcServer)
 
 	return &svc
+}
+
+func (g *productGRPCServer) GetItemTypes(
+	ctx context.Context,
+	request *gen.GetItemTypesRequest,
+) (*gen.GetItemTypesResponse, error) {
+	slog.Info("gRPC client", "http_method", "GET", "http_name", "GetItemTypes")
+
+	res := gen.GetItemTypesResponse{}
+
+	results, err := g.uc.GetItemTypes(ctx)
+	if err != nil {
+		return nil, errors.Wrap(err, "productGRPCServer-GetItemTypes")
+	}
+
+	for _, item := range results {
+		res.ItemTypes = append(res.ItemTypes, &gen.ItemTypeDto{
+			Name:  item.Name,
+			Type:  int32(item.Type),
+			Price: item.Price,
+			Image: item.Image,
+		})
+	}
+
+	return &res, nil
+}
+
+func (g *productGRPCServer) GetItemsByType(
+	ctx context.Context,
+	request *gen.GetItemsByTypeRequest,
+) (*gen.GetItemsByTypeResponse, error) {
+	slog.Info("gRPC client", "http_method", "GET", "http_name", "GetItemsByType", "item_types", request.ItemTypes)
+
+	res := gen.GetItemsByTypeResponse{}
+
+	results, err := g.uc.GetItemsByType(ctx, request.ItemTypes)
+	if err != nil {
+		return nil, errors.Wrap(err, "productGRPCServer-GetItemsByType")
+	}
+
+	for _, item := range results {
+		res.Items = append(res.Items, &gen.ItemDto{
+			Type:  int32(item.Type),
+			Price: item.Price,
+		})
+	}
+
+	return &res, nil
 }
