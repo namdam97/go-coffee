@@ -1,0 +1,23 @@
+filebeat.inputs:
+# Input này sử dụng Docker logs để thu thập log từ các container.
+- type: container
+  paths:
+    - /var/lib/docker/containers/*/*.log
+
+processors:
+  # Giải mã các trường JSON trong trường 'message' của log.
+  # Nếu log không phải JSON, nó sẽ bỏ qua.
+  - decode_json_fields:
+      fields: ["message"]
+      process_array: false
+      max_depth: 1
+      target: "" # Thêm các trường đã giải mã vào cấp cao nhất của document.
+      overwrite_keys: true
+      add_error_key: true
+
+output.elasticsearch:
+  # Địa chỉ của Elasticsearch, được định nghĩa trong docker-compose.
+  hosts: ["elasticsearch:9200"]
+
+# Tắt output ra console của Filebeat.
+logging.to_files: false 

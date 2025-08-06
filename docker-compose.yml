@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  product:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile-product
+    image: go-coffee-product
+    environment:
+      APP_NAME: 'product-service in docker'
+    ports:
+      - 5001:5001
+    restart: unless-stopped
+    logging:
+      driver: json-file
+      options:
+        max-size: 100m
+        max-file: 10
+    networks:
+      - coffee-network
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.9.0
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - 9200:9200
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    restart: unless-stopped
+    networks:
+      - coffee-network
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.9.0
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+    restart: unless-stopped
+    networks:
+      - coffee-network
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.9.0
+    user: root
+    command: filebeat -e -strict.perms=false
+    volumes:
+      - ./deploy/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      - product
+      - elasticsearch
+    restart: unless-stopped
+    networks:
+      - coffee-network
+
+networks:
+  coffee-network:
+
+volumes:
+  esdata:
+    driver: local
