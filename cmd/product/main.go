@@ -41,7 +41,7 @@ func main() {
 	logrus.SetLevel(logger.ConvertLogLevel(cfg.Log.Level))
 
 	// integrate Logrus with the slog logger
-	slog.New(logger.NewLogrusHandler(logrus.StandardLogger()))
+	slog.SetDefault(slog.New(logger.NewLogrusHandler(logrus.StandardLogger())))
 
 	server := grpc.NewServer()
 
