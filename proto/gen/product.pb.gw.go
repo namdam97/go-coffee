@@ -115,7 +115,7 @@ func RegisterProductServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/go.coffeeshop.proto.productapi.ProductService/GetItemTypes", runtime.WithHTTPPathPattern("/v1/api/item-types"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/go.coffee.proto.productapi.ProductService/GetItemTypes", runtime.WithHTTPPathPattern("/v1/api/item-types"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -140,7 +140,7 @@ func RegisterProductServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/go.coffeeshop.proto.productapi.ProductService/GetItemsByType", runtime.WithHTTPPathPattern("/v1/api/items-by-types/{item_types}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/go.coffee.proto.productapi.ProductService/GetItemsByType", runtime.WithHTTPPathPattern("/v1/api/items-by-types/{item_types}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -204,7 +204,7 @@ func RegisterProductServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/go.coffeeshop.proto.productapi.ProductService/GetItemTypes", runtime.WithHTTPPathPattern("/v1/api/item-types"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/go.coffee.proto.productapi.ProductService/GetItemTypes", runtime.WithHTTPPathPattern("/v1/api/item-types"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -226,7 +226,7 @@ func RegisterProductServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/go.coffeeshop.proto.productapi.ProductService/GetItemsByType", runtime.WithHTTPPathPattern("/v1/api/items-by-types/{item_types}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/go.coffee.proto.productapi.ProductService/GetItemsByType", runtime.WithHTTPPathPattern("/v1/api/items-by-types/{item_types}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return

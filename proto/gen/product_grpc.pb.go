@@ -19,8 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	ProductService_GetItemTypes_FullMethodName   = "/go.coffeeshop.proto.productapi.ProductService/GetItemTypes"
-	ProductService_GetItemsByType_FullMethodName = "/go.coffeeshop.proto.productapi.ProductService/GetItemsByType"
+	ProductService_GetItemTypes_FullMethodName   = "/go.coffee.proto.productapi.ProductService/GetItemTypes"
+	ProductService_GetItemsByType_FullMethodName = "/go.coffee.proto.productapi.ProductService/GetItemsByType"
 )
 
 // ProductServiceClient is the client API for ProductService service.
@@ -127,7 +127,7 @@ func _ProductService_GetItemsByType_Handler(srv interface{}, ctx context.Context
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ProductService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "go.coffeeshop.proto.productapi.ProductService",
+	ServiceName: "go.coffee.proto.productapi.ProductService",
 	HandlerType: (*ProductServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
